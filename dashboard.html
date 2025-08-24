@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link href="dash.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard">
+    <div class="avatar">👤</div>
+    <h2 id="username">Welcome, User!</h2>
+    <p id="email">user@example.com</p>
+
+    <div class="btn-group">
+      <button class="btn">My Profile</button>
+      <button class="btn">Settings</button>
+      <button class="btn">Services</button>
+      <button class="btn logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Example: Replace these values dynamically after login
+    const userName = "Himanshu Dwivedi";
+    const userEmail = "himanshu@example.com";
+
+    document.getElementById("username").textContent = `Welcome, ${userName}!`;
+    document.getElementById("email").textContent = userEmail;
+
+    function logout() {
+      alert("You have been logged out!");
+      window.location.href = "index.html"; // Redirect to login page
+    }
+  </script>
+
+</body>
+</html>

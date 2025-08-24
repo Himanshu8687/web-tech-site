@@ -1,0 +1,105 @@
+body {
+      font-family: Arial, sans-serif;
+      background-image: url(2SiFgd.jpg);
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      width: 320px;
+    }
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color:  #0b5ed7;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color:  #0b5ed7;
+    }
+    .captcha {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .captcha-code {
+      font-weight: bold;
+      font-size: 1.3rem;
+      background: #e2e2e2;
+      padding: 6px 12px;
+      border-radius: 5px;
+      letter-spacing: 3px;
+      user-select: none;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      min-height: 20px;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    #profilePage {
+      display: none;
+    }
+    #profilePage h2 {
+      text-align: center;
+    }
+    #profileInfo p {
+      font-size: 1.1rem;
+    }
+    #logoutBtn {
+      margin-top: 20px;
+      background-color: #f44336;
+    }
+    #logoutBtn:hover {
+      background-color: #da190b;
+    }
+    /* Add to login&register.css */
+.button-link {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #2887a7;
+  color: white !important;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+.button-link:hover {
+  background-color:  #0b5ed7;
+}

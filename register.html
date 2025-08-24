@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register</title>
+  <link rel="stylesheet" href="login&register.css" />
+</head>
+<body>
+  <div class="container" id="registerContainer">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="regUsername" placeholder="Username" required />
+      <input type="password" id="regPassword" placeholder="Password" required />
+      <input type="email" id="regEmail" placeholder="Email" required />
+      <div class="captcha">
+        <div id="regCaptchaCode" class="captcha-code"></div>
+        <button type="button" onclick="generateRegCaptcha()" title="Reload CAPTCHA">↻</button>
+      </div>
+      <input type="text" id="regCaptchaInput" placeholder="Enter CAPTCHA" required />
+      <button type="submit">Register</button>
+      <div id="registerErrorMsg" class="error"></div>
+      <div class="success" id="registerSuccessMsg"></div>
+    </form>
+  </div>
+  <script>
+    let regCaptcha = "";
+    function generateRegCaptcha() {
+      regCaptcha = Math.random().toString(36).substring(2, 8);
+      document.getElementById("regCaptchaCode").textContent = regCaptcha;
+    }
+    window.onload = function () {
+      generateRegCaptcha();
+    };
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("regUsername").value.trim();
+      const password = document.getElementById("regPassword").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const captchaInput = document.getElementById("regCaptchaInput").value.trim();
+      const errorMsg = document.getElementById("registerErrorMsg");
+      const successMsg = document.getElementById("registerSuccessMsg");
+
+      if(captchaInput !== regCaptcha) {
+        errorMsg.textContent = "Incorrect CAPTCHA. Please try again.";
+        successMsg.textContent = "";
+        generateRegCaptcha();
+        return;
+      }
+      if(localStorage.getItem(username)) {
+        errorMsg.textContent = "Username already exists.";
+        successMsg.textContent = "";
+        return;
+      }
+      localStorage.setItem(username, JSON.stringify({ password, email }));
+      errorMsg.textContent = "";
+      successMsg.textContent = "Registration successful! You can now login.";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

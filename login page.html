@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+<link rel="stylesheet" href="login&register.css" />
+</head>
+<body>
+
+  <div class="container" id="loginContainer">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <div class="captcha">
+        <div id="captchaCode" class="captcha-code"></div>
+        <button type="button" onclick="generateCaptcha()" title="Reload CAPTCHA">↻</button>
+      </div>
+      <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required />
+      <button type="submit">Login</button>
+      <div id="errorMsg" class="error"></div>
+      <p>Don't have an account? <a href="register.html">Signup</a></p>
+      <div class="success" id="successMsg"></div>
+    </form>
+  </div>
+
+  <div class="container" id="profilePage" style="display:none;">
+    <h2>User Profile</h2>
+    <div id="profileInfo">
+      <p><strong>Username:</strong> <span id="profileUsername"></span></p>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    </div>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+<script>
+  let currentCaptcha = "";
+
+  function generateCaptcha() {
+    currentCaptcha = Math.random().toString(36).substring(2, 8);
+    document.getElementById("captchaCode").textContent = currentCaptcha;
+  }
+
+  window.onload = function () {
+    generateCaptcha();
+    checkLoggedIn();
+  };
+
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const captchaInput = document.getElementById("captchaInput").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    if(captchaInput !== currentCaptcha) {
+      errorMsg.textContent = "Incorrect CAPTCHA. Please try again.";
+      generateCaptcha();
+      return;
+    }
+
+    const storedUser = JSON.parse(localStorage.getItem(username));
+    if(storedUser && storedUser.password === password) {
+      errorMsg.textContent = "";
+      alert("Login successful!\n(Thank you mail simulated in console)");
+
+      console.log(`Sending thank you email to: ${email}`);
+      console.log(`Subject: Thank You for Logging In`);
+      console.log(`Message: Hi ${username},\n\nThank you for logging in!\n\nBest regards,\nYour Team`);
+
+      sessionStorage.setItem("loggedInUser", username);
+      sessionStorage.setItem("loggedInEmail", storedUser.email);
+
+      showProfile();
+    } else {
+      errorMsg.textContent = "Invalid username or password.";
+    }
+  });
+
+  function showProfile() {
+    const username = sessionStorage.getItem("loggedInUser");
+    const email = sessionStorage.getItem("loggedInEmail");
+
+    if(!username) return;
+
+    document.getElementById("profileUsername").textContent = username;
+    document.getElementById("profileEmail").textContent = email;
+
+    document.getElementById("loginContainer").style.display = "none";
+    document.getElementById("profilePage").style.display = "block";
+  }
+
+  function checkLoggedIn() {
+    if(sessionStorage.getItem("loggedInUser")) {
+      showProfile();
+    }
+  }
+
+  document.getElementById("logoutBtn").addEventListener("click", function() {
+    sessionStorage.removeItem("loggedInUser");
+    sessionStorage.removeItem("loggedInEmail");
+
+    document.getElementById("loginContainer").style.display = "block";
+    document.getElementById("profilePage").style.display = "none";
+    generateCaptcha();
+  });
+</script>
